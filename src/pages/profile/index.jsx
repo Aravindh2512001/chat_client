@@ -17,7 +17,7 @@ const Profile = () => {
   
     const profileMutation = useMutation({
       mutationFn: async (data) => {
-        return apiClient.put(`${PROFILE_UPDATE}/${user._id}`, { image: avatar, username: data.username })
+        return apiClient.put(`${PROFILE_UPDATE}/${user.id}`, { image: avatar, username: data.username })
         .then((res) => res.data);
       },
       onSuccess: (data) => {

@@ -7,7 +7,8 @@ import { useStore } from "../../store/store";
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const { theme, setTheme} = useStore();
+  const { theme, setTheme} = useStore(); 
+  //ask jsamjkc
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
 

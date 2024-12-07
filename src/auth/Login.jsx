@@ -29,6 +29,12 @@ const Login = () => {
         return res.data;
       }),
     onSuccess: (data) => {
+      if (data?.token) {
+        localStorage.setItem('auth_token', data.token);
+        toast.success('Login successful');
+      } else {
+        toast.error('No token received');
+      }
       login(data?.user,data?.token)
       navigate("/profile")
       reset()

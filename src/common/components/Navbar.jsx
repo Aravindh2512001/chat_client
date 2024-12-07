@@ -2,7 +2,7 @@ import { ArrowRightStartOnRectangleIcon, ChatBubbleBottomCenterTextIcon } from "
 import { useState } from "react";
 import { THEMES } from "../../constants/data"; 
 import { apiClient } from "../../api";
-import { LOGOUT } from "../../api/endpoints";
+import { LOGOUT } from "@api/endpoints";
 import { useStore } from "../../store/store";
 
 const Navbar = () => {

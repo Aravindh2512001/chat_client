@@ -1,5 +1,5 @@
 import { apiClient } from "../api";
-import { CHECK_AUTH } from "../api/endpoints";
+import { CHECK_AUTH } from "@api/endpoints";
 import { socket } from "../utils/socket";
 
 export const authSlice = (set) => ({

@@ -3,7 +3,7 @@ import { useStore } from "../../../store/store";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "../../../api";
-import { SEND_MESSAGE } from "../../../api/endpoints";
+import { SEND_MESSAGE } from "@api/endpoints";
 
 const ChatFooter = () => {
   const { user, selectedUser, sendMessage } = useStore();

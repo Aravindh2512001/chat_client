@@ -10,7 +10,7 @@ import AuthImagePattern from "./AuthImagePattern";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { apiClient } from "../api";
-import { REGISTER } from "../api/endpoints";
+import { REGISTER } from "@api/endpoints";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";

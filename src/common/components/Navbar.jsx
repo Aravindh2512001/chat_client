@@ -1,13 +1,13 @@
 import { ArrowRightStartOnRectangleIcon, ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { THEMES } from "../../constants/data"; 
-import { apiClient } from "../../api";
-import { LOGOUT } from "@api/endpoints";
+// import { apiClient } from "../../api";
+// import { LOGOUT } from "@api/endpoints";
 import { useStore } from "../../store/store";
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const { theme, setTheme, logout } = useStore();
+  const { theme, setTheme} = useStore();
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
 

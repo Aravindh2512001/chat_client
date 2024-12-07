@@ -10,10 +10,10 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "../api";
-import { LOGIN } from "@api/endpoints";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useStore } from "../store/store";
+import { LOGIN } from "@api/endPoints";
 
 const Login = () => {
   const { register, handleSubmit ,reset} = useForm();

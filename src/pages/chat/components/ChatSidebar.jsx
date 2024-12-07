@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
-import { GET_USERS } from "@api/endpoints";
 import { useStore } from "../../../store/store";
 import { apiClient } from "../../../api";
+import { GET_USERS } from "@api/endPoints";
 
 const ChatSidebar = () => {
   const [userList, setUserList] = useState([]);

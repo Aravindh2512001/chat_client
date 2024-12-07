@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 import { useState, useRef } from "react";
 import { useStore } from "../../store/store";
 import { apiClient } from "../../api";
-import { PROFILE_UPDATE } from "@api/endpoints";
 import {useNavigate} from "react-router-dom";
+import { PROFILE_UPDATE } from "@api/endPoints";
 
 const Profile = () => {
   const { register, handleSubmit } = useForm();

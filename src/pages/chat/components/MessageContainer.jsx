@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useStore } from "../../../store/store";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "../../../api";
-import { GET_MESSAGE } from "@api/endpoints";
+import { GET_MESSAGE } from "@api/endPoints";
 
 const MessageContainer = () => {
   const { user, selectedUser, subscribeToMessages, unsubscribeFromMessages } = useStore();

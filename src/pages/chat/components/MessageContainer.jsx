@@ -5,16 +5,10 @@ import { apiClient } from "../../../api";
 import { GET_MESSAGE } from "@api/endPoints";
 
 const MessageContainer = () => {
-  const { user, selectedUser, subscribeToMessages, unsubscribeFromMessages } = useStore();
+  const { messages, user, selectedUser, subscribeToMessages, unsubscribeFromMessages } = useStore();
 
-
-  
-
-  console.log("selectedUser._id",selectedUser)
-  const { data, isError, isLoading, error } = useQuery({
+  const { isError, isLoading, error } = useQuery({
     queryKey: ["Message", selectedUser?._id],
-
-
     queryFn: async () => {
       const response = await apiClient.get(`${GET_MESSAGE}/${selectedUser._id}`);
       return response.data;
@@ -23,16 +17,18 @@ const MessageContainer = () => {
   });
 
   useEffect(() => {
-    subscribeToMessages();
-    return () => unsubscribeFromMessages();
-  }, [subscribeToMessages, unsubscribeFromMessages]);
+    if (selectedUser) {
+      subscribeToMessages(); 
+    }
+    return () => unsubscribeFromMessages(); 
+  }, [subscribeToMessages, unsubscribeFromMessages, selectedUser]);
 
   if (isLoading) return <div>Loading messages...</div>;
   if (isError) return <div>Error fetching messages: {error.message}</div>;
 
   return (
-    <div className="flex-1 bg-gray-800 w-full h-full overflow-auto p-4">
-      {data?.messages.map((message) => (
+    <div className="flex-1 bg-gray-800 w-full h-full overflow-y-auto p-4">
+      {messages.map((message) => (
         <div key={message._id} className={`chat ${message.senderId === user._id ? "chat-end" : "chat-start"}`}>
           <div className="chat-image avatar">
             <div className="w-10 rounded-full">
@@ -51,5 +47,6 @@ const MessageContainer = () => {
     </div>
   );
 };
+
 
 export default MessageContainer;

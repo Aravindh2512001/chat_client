@@ -42,12 +42,13 @@ export const authSlice = (set) => ({
     socket.connect();
   },
 
-  profileUpdate: (value) =>
+  profileUpdate: (value) =>{
+    console.log("value",value)
     set({
       isProfileUpdated: true,
       user: value,
-    }),
-
+    })
+  },
   logout: async () => {
     // Disconnect socket on logout
     socket.disconnect();
@@ -59,3 +60,4 @@ export const authSlice = (set) => ({
     });
   },
 });
+

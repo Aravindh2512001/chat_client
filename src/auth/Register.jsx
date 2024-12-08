@@ -16,10 +16,9 @@ import toast from "react-hot-toast";
 import { REGISTER } from "@api/endPoints";
 
 const Register = () => {
-  const { register, handleSubmit,reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
 
   //register
   const registerMutation = useMutation({
@@ -28,17 +27,17 @@ const Register = () => {
         return res.data;
       }),
     onSuccess: (data) => {
-      navigate("/login")
+      navigate("/login");
       reset();
       toast.success(data?.message);
     },
     onError: (error) => {
       const errorMessage =
-        error?.response?.data?.message || "Registration failed. Please try again.";
+        error?.response?.data?.message ||
+        "Registration failed. Please try again.";
       toast.error(errorMessage);
     },
   });
-  
 
   const onSubmit = async (data) => {
     registerMutation.mutate(data);

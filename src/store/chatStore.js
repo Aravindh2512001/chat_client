@@ -17,16 +17,25 @@ export const useChatStore = (set, get) => ({
     socket.connect();
 
     socket.on("connect", () => console.log("Socket connected:", socket.id));
+
+    // Handle message sending
     socket.on("send_message", (msg) => {
       console.log("Message sent to the server:", msg);
       set((state) => ({ messages: [...state.messages, msg] }));
     });
 
+    // Handle new incoming messages
     socket.on("new_message", (msg) => {
       console.log("New message received:", msg);
-      set((state) => ({ messages: [...state.messages, msg] }));
+      set((state) => {
+        if (!state.messages.some((message) => message._id === msg._id)) {
+          return { messages: [...state.messages, msg] };
+        }
+        return state;
+      });
     });
 
+    // Handle online users update
     socket.on("online_users", (users) => {
       console.log("onlineUsers", users);
       set({ onlineUsers: users });
@@ -35,15 +44,14 @@ export const useChatStore = (set, get) => ({
     socket.on("disconnect", () => console.log("Socket disconnected:", socket.id));
   },
 
-  // Subscribe to incoming messages
+  // Subscribe to incoming messages for the selected user
   subscribeToMessages: () => {
     const { selectedUser } = get();
     if (!selectedUser) return;
 
-    socket.on("new_message", (newMessage) => {
-      if (newMessage.senderId === selectedUser._id) {
-        set((state) => ({ messages: [...state.messages, newMessage] }));
-      }
+    socket.on("new_message", (msg) => {
+      console.log("New message received:", msg);
+      set((state) => ({ messages: [...state.messages, msg] }));
     });
   },
 
@@ -72,13 +80,11 @@ export const useChatStore = (set, get) => ({
 
   // Send a message
   sendMessage: (message) => {
-  console.log("Sending message:", message);
-  if (socket.connected) {
-    socket.emit("send_message", message);
-    set((state) => ({ messages: [...state.messages, message] }));
-  } else {
-    console.error("Socket is not connected.");
-  }
-},
-
+    if (socket.connected) {
+      socket.emit("send_message", message);
+      set((state) => ({ messages: [...state.messages, message] }));
+    } else {
+      console.error("Socket is not connected.");
+    }
+  },
 });

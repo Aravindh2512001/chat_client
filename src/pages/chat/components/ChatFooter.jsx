@@ -25,9 +25,10 @@ const ChatFooter = () => {
     },
     onSuccess: (newMessage) => {
       console.log("newMessage", newMessage);
-      sendMessage(newMessage);
-      setMessage("");
+      sendMessage(newMessage);  // This should update the message state in the store
+      setMessage("");  // Clear the input field
     },
+    
     onError: (error) => console.error("Error sending message:", error),
   });
 

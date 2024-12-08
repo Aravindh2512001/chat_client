@@ -9,9 +9,12 @@ import { useEffect } from "react";
 export default function App() {
   const queryClient = new QueryClient();
   const { theme, checkAuth } = useStore();
+  const authToken = localStorage.getItem('auth_token'); 
+
+  console.log(authToken); 
 
   useEffect(() => {
-    checkAuth();  
+    checkAuth(); 
   }, [checkAuth]);
 
   return (
@@ -19,7 +22,7 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <Navbar />
         <Router>
-          <AppRoutes />
+          <AppRoutes authToken={authToken} /> 
           <Toaster position="top-center" />
         </Router>
       </QueryClientProvider>

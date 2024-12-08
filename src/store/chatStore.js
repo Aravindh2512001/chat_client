@@ -1,3 +1,4 @@
+// In frontend (chat store)
 import { socket } from "../utils/socket";
 
 export const useChatStore = (set, get) => ({
@@ -18,16 +19,11 @@ export const useChatStore = (set, get) => ({
 
     socket.on("connect", () => console.log("Socket connected:", socket.id));
 
-    // Handle message sending
-    socket.on("send_message", (msg) => {
-      console.log("Message sent to the server:", msg);
-      set((state) => ({ messages: [...state.messages, msg] }));
-    });
-
     // Handle new incoming messages
     socket.on("new_message", (msg) => {
       console.log("New message received:", msg);
       set((state) => {
+        // Prevent adding duplicate messages
         if (!state.messages.some((message) => message._id === msg._id)) {
           return { messages: [...state.messages, msg] };
         }
@@ -44,7 +40,17 @@ export const useChatStore = (set, get) => ({
     socket.on("disconnect", () => console.log("Socket disconnected:", socket.id));
   },
 
-  // Subscribe to incoming messages for the selected user
+  // Send a message
+  sendMessage: (message) => {
+    if (socket.connected) {
+      socket.emit("send_message", message); // Emit the message to the backend
+      set((state) => ({ messages: [...state.messages, message] }));
+    } else {
+      console.error("Socket is not connected.");
+    }
+  },
+
+  // Other methods (subscribe, unsubscribe, etc.)
   subscribeToMessages: () => {
     const { selectedUser } = get();
     if (!selectedUser) return;
@@ -55,36 +61,22 @@ export const useChatStore = (set, get) => ({
     });
   },
 
-  // Unsubscribe from incoming messages
   unsubscribeFromMessages: () => {
     socket.off("new_message");
   },
 
-  // Disconnect socket and clear messages
   disconnectSocket: () => {
     socket.disconnect();
     set({ messages: [], onlineUsers: [] });
   },
 
-  // Set the selected user
   setSelectedUser: (user) => {
     set({ selectedUser: user });
     localStorage.setItem("selectedUser", JSON.stringify(user));
   },
 
-  // Clear selected user
   clearSelectedUser: () => {
     set({ selectedUser: null });
     localStorage.removeItem("selectedUser");
-  },
-
-  // Send a message
-  sendMessage: (message) => {
-    if (socket.connected) {
-      socket.emit("send_message", message);
-      set((state) => ({ messages: [...state.messages, message] }));
-    } else {
-      console.error("Socket is not connected.");
-    }
   },
 });
